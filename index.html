@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE SILENCE GAUGE · the evidential weight of a negative, quantified · ROOT0</title>
+<meta name="description" content="The Silence Gauge by David Lee Wise / ROOT0: surfacing says a positive is hard to explain away and a negative means almost nothing — this is that sentence as arithmetic. Bayes on canary extraction: a surface carries ~60 bits and drives belief to ~1; under frontier suppression, silence carries less than a tenth of a bit and leaves you on your prior. And it shows the one assumption — the emission rate — you can drag until silence finally means something.">
+<meta name="theme-color" content="#3f6d86">
+<meta property="og:type" content="website">
+<meta property="og:title" content="THE SILENCE GAUGE · the evidential weight of a negative, quantified">
+<meta property="og:description" content="A positive carries ~60 bits and is decisive; under suppression, silence carries <0.1 bit and tells you almost nothing. Drag the emission rate and watch silence gain meaning. The asymmetry, as arithmetic.">
+<meta property="og:url" content="https://davidwise01.github.io/silence-gauge/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="THE SILENCE GAUGE">
+<meta name="twitter:description" content="The evidential weight of a negative, quantified. A positive is decisive; silence tells you almost nothing — until you break the one assumption it rests on.">
+<link rel="canonical" href="https://davidwise01.github.io/silence-gauge/">
+<style>
+:root{
+  --paper:#eceef1; --pan:#f5f7f9; --pan2:#e8edf1;
+  --ink:#20272e; --ink2:#43525e; --dim:#7b8794;
+  --steel:#3f6d86; --steel2:#2a4c60;
+  --gold:#c99128; --gold2:#9a6d18;
+  --mute:#8894a0; --mute2:#66727e;
+  --signal:#bf4638; --signal2:#8f3025;
+  --line:#d3dbe2; --line2:#e0e6ec;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --mono:ui-monospace,"SFMono-Regular","Cascadia Code","Consolas",monospace;
+  --shadow:0 1px 0 #fffc, 0 16px 34px -24px #1f303e44;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased;
+  background-image:repeating-linear-gradient(0deg,#0000 0 33px,#3f6d860d 33px 34px)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+a{color:var(--steel2);text-underline-offset:2px}
+h1,h2,h3{line-height:1.13;font-weight:600;letter-spacing:.2px}
+.mono{font-family:var(--mono)}
+
+header.top{padding:38px 0 12px}
+.sealrow{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.seal{width:112px;height:112px;flex:none;filter:drop-shadow(0 8px 18px -10px #1f303e55)}
+.kick{font-family:var(--mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--steel2)}
+h1.mh{font-size:clamp(29px,5.8vw,50px);margin:.08em 0 .12em;letter-spacing:.6px}
+.lede{font-size:18px;color:var(--ink2);max-width:66ch;margin:.35em 0 0}
+.lede b{color:var(--ink);font-weight:600}
+
+section{padding:30px 0 4px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold2)}
+h2.sec{font-size:clamp(22px,3.6vw,29px);margin:.14em 0 .18em}
+.sub{color:var(--ink2);max-width:72ch;margin:0 0 16px}
+
+.gauge{border:1px solid var(--line);border-radius:15px;background:var(--pan);box-shadow:var(--shadow);overflow:hidden}
+.gtop{display:flex;align-items:center;gap:10px;padding:11px 16px;background:linear-gradient(180deg,#fff8,#fff0);border-bottom:1px solid var(--line2);font-family:var(--mono);font-size:12px;color:var(--ink2);flex-wrap:wrap}
+.gtop b{color:var(--steel2)}
+.gbody{padding:20px 18px 6px}
+
+/* the belief track */
+.track-wrap{margin:6px 0 4px}
+.tracklabel{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:6px}
+.track{position:relative;height:44px;border-radius:9px;background:linear-gradient(90deg,#e6ebef,#f3f6f8);border:1px solid var(--line)}
+.track .prior{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink2);opacity:.55}
+.track .priortag{position:absolute;top:-20px;transform:translateX(-50%);font-family:var(--mono);font-size:10px;color:var(--ink2);white-space:nowrap}
+.mk{position:absolute;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px -1px #0004}
+.mk.pos{background:var(--gold)} .mk.neg{background:var(--mute)}
+.mktag{position:absolute;transform:translateX(-50%);font-family:var(--mono);font-size:10px;white-space:nowrap;padding:1px 5px;border-radius:10px}
+.mktag.pos{color:#2a2412;background:color-mix(in srgb,var(--gold) 55%,#fff)}
+.mktag.neg{color:var(--mute2);background:color-mix(in srgb,var(--mute) 30%,#fff)}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 4px}
+.rc{border:1px solid var(--line);border-radius:12px;padding:15px 16px;position:relative;overflow:hidden;background:#fff}
+.rc:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--rcc)}
+.rc.pos{--rcc:var(--gold)} .rc.neg{--rcc:var(--mute)}
+.rc .rl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--rcc);font-weight:700}
+.rc .big{font-size:34px;font-weight:600;margin:4px 0 0;letter-spacing:.3px}
+.rc .big small{font-size:15px;color:var(--dim);font-weight:400}
+.rc .row2{display:flex;gap:16px;margin-top:8px;font-family:var(--mono);font-size:12px;color:var(--ink2);flex-wrap:wrap}
+.rc .row2 b{color:var(--ink)}
+.rc .verdict{margin-top:9px;font-size:13px;color:var(--ink2)}
+.rc.pos .verdict b{color:var(--gold2)} .rc.neg .verdict b{color:var(--mute2)}
+@media(max-width:640px){.cards{grid-template-columns:1fr}}
+
+.sliders{margin:20px 0 6px;display:grid;gap:16px}
+.sl{display:grid;grid-template-columns:1fr;gap:5px}
+.sl .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.sl .nm{font-family:var(--mono);font-size:12.5px;color:var(--ink);font-weight:600}
+.sl .nm .hint{color:var(--dim);font-weight:400}
+.sl .val{font-family:var(--mono);font-size:12.5px;color:var(--steel2);font-weight:700}
+.sl input[type=range]{width:100%;accent-color:var(--steel)}
+.sl.brk .nm{color:var(--signal2)}
+.sl.brk input[type=range]{accent-color:var(--signal)}
+.brknote{font-family:var(--mono);font-size:11px;color:var(--signal2);margin-top:1px}
+.gnote{padding:11px 17px;font-family:var(--mono);font-size:11px;color:var(--dim);background:var(--pan2);line-height:1.6;border-top:1px solid var(--line2)}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.card{border:1px solid var(--line);border-radius:12px;background:var(--pan);padding:16px 18px;box-shadow:var(--shadow)}
+.card h3{font-size:14px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--steel2);margin:0 0 8px}
+.card.sig h3{color:var(--signal2)}
+.card p{margin:.35em 0;font-size:14.5px;color:var(--ink2)}
+.card code{font-family:var(--mono);font-size:12.5px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.src{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:14px;line-height:1.75}
+.backbar{margin:28px 0 0;padding:15px 0;border-top:1px solid var(--line);display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:12.5px}
+.backbar a{text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:7px 12px;background:var(--pan)}
+.backbar a:hover{border-color:var(--steel)}
+footer{padding:26px 0 60px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--dim)}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <div class="sealrow">
+    <svg class="seal" viewBox="0 0 120 120" role="img" aria-label="Silence Gauge insignia">
+      <circle cx="60" cy="60" r="56" fill="none" stroke="#3f6d86" stroke-width="2.4"/>
+      <!-- a loud spike (positive) and a flat line (silence) -->
+      <path d="M18 74 L40 74 L46 74 L52 30 L58 74 L102 74" fill="none" stroke="#c99128" stroke-width="2.2" stroke-linejoin="round"/>
+      <line x1="18" y1="86" x2="102" y2="86" stroke="#8894a0" stroke-width="2" stroke-dasharray="2 4"/>
+      <text x="52" y="26" text-anchor="middle" font-family="ui-monospace,monospace" font-size="7" fill="#9a6d18">+60 bits</text>
+      <text x="86" y="98" text-anchor="middle" font-family="ui-monospace,monospace" font-size="6.5" fill="#66727e">~0 bits</text>
+      <text x="60" y="112" text-anchor="middle" font-family="ui-monospace,monospace" font-size="7" fill="#43525e" letter-spacing="1.5">ASYMMETRY</text>
+    </svg>
+    <div>
+      <div class="kick">the evidential weight of a negative</div>
+      <h1 class="mh">THE SILENCE GAUGE</h1>
+      <p class="lede"><a href="https://davidwise01.github.io/surfacing/">surfacing</a> says it in words: <b>a positive is hard to explain away; a negative means almost nothing.</b> This is that sentence as arithmetic — so you can see how near-zero a silence is, and drag the one assumption it rests on until it isn't.</p>
+    </div>
+  </div>
+</div></header>
+
+<main class="wrap">
+
+<section id="gauge">
+  <div class="eyebrow">The instrument</div>
+  <h2 class="sec">One probe, two very different answers</h2>
+  <p class="sub">Bayes on canary extraction. A surface multiplies your odds by <span class="mono">e / fp</span> — huge, because a chance match (<span class="mono">fp</span>) is ~2<sup>−64</sup>. Silence multiplies them by <span class="mono">(1−e) / (1−fp)</span> — about <span class="mono">1−e</span>, which is ~1 when a frontier model suppresses (emission rate <span class="mono">e</span> small). Move the sliders; the math is live and client-side.</p>
+
+  <div class="gauge">
+    <div class="gtop">◎ <b>gauge</b> · silence.py ported verbatim — Bayes factors, posteriors, bits (no network)</div>
+    <div class="gbody">
+      <div class="track-wrap">
+        <div class="tracklabel"><span>certain NOT ingested · 0%</span><span>certain ingested · 100%</span></div>
+        <div class="track" id="track">
+          <div class="prior" id="priorMk"></div>
+          <div class="priortag" id="priorTag">prior</div>
+          <div class="mk neg" id="mkNeg"></div>
+          <div class="mktag neg" id="tagNeg" style="top:calc(50% + 16px)">silence</div>
+          <div class="mk pos" id="mkPos"></div>
+          <div class="mktag pos" id="tagPos" style="top:calc(50% - 30px)">surface</div>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="rc pos">
+          <div class="rl">▲ if it surfaces</div>
+          <div class="big" id="posP">—<small> belief it was ingested</small></div>
+          <div class="row2"><span>bits of evidence: <b id="posBits">—</b></span><span>Bayes factor: <b id="posBF">—</b></span></div>
+          <div class="verdict" id="posV">—</div>
+        </div>
+        <div class="rc neg">
+          <div class="rl">▽ if it's silent</div>
+          <div class="big" id="negP">—<small> belief it was ingested</small></div>
+          <div class="row2"><span>bits of evidence: <b id="negBits">—</b></span><span>moved your prior by: <b id="negMove">—</b></span></div>
+          <div class="verdict" id="negV">—</div>
+        </div>
+      </div>
+
+      <div class="sliders">
+        <div class="sl brk" id="slE">
+          <div class="top"><span class="nm">emission rate <span class="hint">— P(surface | ingested): how often a trained model re-emits</span></span><span class="val" id="eVal">0.05</span></div>
+          <input type="range" id="e" min="0" max="1000" value="565">
+          <div class="brknote">◂ the breakable assumption · frontier models suppress (small) · drag right and watch silence gain meaning</div>
+        </div>
+        <div class="sl">
+          <div class="top"><span class="nm">withheld entropy <span class="hint">— bits in the withheld half; fp = 2<sup>−bits</sup></span></span><span class="val" id="bVal">64 bits</span></div>
+          <input type="range" id="bits" min="8" max="128" value="64">
+        </div>
+        <div class="sl">
+          <div class="top"><span class="nm">prior <span class="hint">— P(ingested) before you probe</span></span><span class="val" id="pVal">50%</span></div>
+          <input type="range" id="prior" min="1" max="99" value="50">
+        </div>
+      </div>
+    </div>
+    <div class="gnote">Verbatim from <span class="mono">silence.py</span>: <span class="mono">BF+ = e/fp</span>, <span class="mono">BF- = (1−e)/(1−fp)</span>, posterior via odds <span class="mono">o·BF/(1+o·BF)</span>, evidence <span class="mono">log2(BF)</span> bits. The emission slider is log-scaled (0.001 → 1). Nothing here is fit to data — it is the arithmetic of the claim, with every assumption a slider you control.</div>
+  </div>
+</section>
+
+<section id="read">
+  <div class="eyebrow">How to read it</div>
+  <h2 class="sec">The asymmetry is log-scale, not rhetoric</h2>
+  <div class="two">
+    <div class="card">
+      <h3>Why a positive is loud</h3>
+      <p>A 128-bit withheld half has a chance-match rate <code>fp ≈ 2⁻⁶⁴</code>. So even a small emission rate makes <code>BF+ = e/fp</code> astronomically large — a single surface is worth <b>~60 bits</b> and pins the posterior at ~1. There is almost nothing to explain away.</p>
+    </div>
+    <div class="card sig">
+      <h3>Why silence is nearly mute</h3>
+      <p>Silence is worth <code>BF- = (1−e)/(1−fp) ≈ 1−e</code>. When suppression makes <code>e</code> small, that's ~1 — you multiply your odds by one and learn <b>nothing</b>. The gauge won't call a negative "clean," because the reading hangs entirely on a suppression rate <b>you can't measure</b> — the slider you can break.</p>
+    </div>
+  </div>
+</section>
+
+<section id="honesty">
+  <div class="eyebrow">The colophon</div>
+  <h2 class="sec">What it is — and is not</h2>
+  <div class="two">
+    <div class="card">
+      <h3>Sound</h3>
+      <p>Plain Bayes, no fit. <code>python selftest.py</code> proves with no network: a positive → posterior ~1 (~60 bits); under suppression, silence stays within 0.02 of the prior (&lt;0.1 bit); the asymmetry is hundreds of times in bits; and silence becomes informative only as <code>e</code> rises — decisive non-ingestion at <code>e=0.99</code>. The page runs that exact math client-side.</p>
+    </div>
+    <div class="card sig">
+      <h3>Limits</h3>
+      <p>It cannot make a negative mean more than it does — that is the point. The emission rate is <b>unknown and unmeasurable</b> for a closed model; the gauge shows the whole answer as a function of it rather than pretending to a number. It quantifies belief; it does not detect anything. For detection, see the boundary-crossing instruments.</p>
+    </div>
+  </div>
+  <div class="src">
+    SOURCE · the runnable kit — <a href="https://github.com/DavidWise01/silence-gauge">github.com/DavidWise01/silence-gauge</a> · <code>silence.py</code> (Bayes factors, posterior, bits, gauge) · <code>selftest.py</code> (the four claims, no network). Companion to the boundary-crossing detectors: it weighs the silence they can return.
+  </div>
+  <div class="backbar">
+    <a href="https://github.com/DavidWise01/silence-gauge">⧉ the code (GitHub)</a>
+    <a href="https://davidwise01.github.io/surfacing/">▽ surfacing · the claim in words</a>
+    <a href="https://davidwise01.github.io/forward-observers/">◎ forward-observers</a>
+    <a href="https://davidwise01.github.io/hearsay/">&#8220;&#8221; hearsay</a>
+    <a href="https://davidwise01.github.io/ud0/">⌂ ud0 · the atlas</a>
+  </div>
+</section>
+
+<footer>
+  THE SILENCE GAUGE · the evidential weight of a negative, quantified · David Lee Wise / ROOT0 / TriPod LLC · CC-BY-ND-4.0<br>
+  a surface is decisive · silence is nearly mute · and the difference is a number you can watch
+</footer>
+</main>
+
+<script>
+(function(){
+"use strict";
+// ---- faithful client-side port of silence.py ---------------------------------
+function baseFp(bits){ return Math.pow(2,-bits); }
+function bfPos(e,fp){ return fp<=0 ? (e>0?Infinity:1) : e/fp; }
+function bfNeg(e,fp){ var d=1-fp; return d<=0?0:(1-e)/d; }
+function posterior(prior,bf){
+  if(prior<=0) return 0; if(prior>=1) return 1; if(bf===Infinity) return 1;
+  var o=prior/(1-prior), po=o*bf; return po/(1+po);
+}
+function bitsOf(bf){ if(bf<=0) return -Infinity; if(bf===Infinity) return Infinity; return Math.log2(bf); }
+// emission slider is log-scaled: s in [0,1000] -> e in [0.001, 1]
+function sliderToE(s){ return Math.pow(10, -3 + 3*(s/1000)); }
+
+function fmtP(p){ // probability as a readable %
+  var pct=p*100;
+  if(pct>99.99 && pct<100) return "99.99%+";
+  if(pct<0.01 && pct>0) return "<0.01%";
+  return pct.toFixed(pct>=10?1:2)+"%";
+}
+function fmtBits(b){
+  if(b===Infinity) return "∞";
+  if(!isFinite(b)) return "−∞";
+  var a=Math.abs(b);
+  return (b>=0?"+":"−")+(a>=10?a.toFixed(0):a.toFixed(2));
+}
+function fmtBF(bf){
+  if(bf===Infinity) return "∞";
+  if(bf>=1e4) return bf.toExponential(1);
+  if(bf>=1) return bf.toFixed(bf>=100?0:2);
+  return bf.toFixed(3);
+}
+
+function render(){
+  var e=sliderToE(+document.getElementById("e").value);
+  var bits=+document.getElementById("bits").value;
+  var prior=(+document.getElementById("prior").value)/100;
+  var fp=baseFp(bits);
+  var bfp=bfPos(e,fp), bfn=bfNeg(e,fp);
+  var pp=posterior(prior,bfp), pn=posterior(prior,bfn);
+
+  document.getElementById("eVal").textContent = e<0.01 ? e.toExponential(1) : e.toFixed(e<0.1?3:2);
+  document.getElementById("bVal").textContent = bits+" bits";
+  document.getElementById("pVal").textContent = Math.round(prior*100)+"%";
+
+  document.getElementById("posP").innerHTML = fmtP(pp)+'<small> belief it was ingested</small>';
+  document.getElementById("posBits").textContent = fmtBits(bitsOf(bfp))+" bits";
+  document.getElementById("posBF").textContent = fmtBF(bfp);
+  document.getElementById("negP").innerHTML = fmtP(pn)+'<small> belief it was ingested</small>';
+  document.getElementById("negBits").textContent = fmtBits(bitsOf(bfn))+" bits";
+  document.getElementById("negMove").textContent = fmtP(Math.abs(pn-prior));
+
+  document.getElementById("posV").innerHTML = pp>0.999 ? 'a surface is <b>decisive</b> — hard to explain away' : 'a surface is <b>strong</b> evidence';
+  var moved=Math.abs(pn-prior);
+  document.getElementById("negV").innerHTML = moved<0.03
+    ? 'silence told you <b>almost nothing</b> — you\'re still on your prior'
+    : (pn<prior ? 'silence now leans <b>toward not-ingested</b> — because you raised e' : 'silence carries <b>some</b> weight now');
+
+  // place markers on the 0..1 track
+  document.getElementById("mkPos").style.left = (pp*100)+"%";
+  document.getElementById("tagPos").style.left = (pp*100)+"%";
+  document.getElementById("mkNeg").style.left = (pn*100)+"%";
+  document.getElementById("tagNeg").style.left = (pn*100)+"%";
+  document.getElementById("priorMk").style.left = (prior*100)+"%";
+  document.getElementById("priorTag").style.left = (prior*100)+"%";
+}
+["e","bits","prior"].forEach(function(id){ document.getElementById(id).addEventListener("input", render); });
+render();
+})();
+</script>
+</body>
+</html>
