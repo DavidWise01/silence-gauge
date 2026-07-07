@@ -14,7 +14,7 @@ much to believe a silence** when it doesn't.
 | symbol | meaning | typical |
 |--------|---------|---------|
 | `e`  | emission rate `P(surface \| ingested)` — how often a model that *was* trained on your canary re-emits it | **small** for frontier models (verbatim suppression) |
-| `fp` | false-positive `P(surface \| not ingested)` — chance completion of a 128-bit withheld half | `~2^-64` ≈ 0 |
+| `fp` | false-positive `P(surface \| not ingested)` — chance completion of the 64-bit withheld half of a 128-bit canary | `~2^-64` ≈ 0 |
 | `pi` | prior `P(ingested)` | your call |
 
 Bayes factors (how much one observation multiplies your odds):

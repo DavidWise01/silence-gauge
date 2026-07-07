@@ -9,8 +9,8 @@ The model (Bayes on canary extraction):
   e   = emission rate   P(surface | ingested)      -- how often a model that WAS
         trained on your canary actually re-emits it. LOW for frontier models,
         because they are trained to suppress verbatim regurgitation.
-  fp  = false-positive  P(surface | NOT ingested)  -- chance completion of a
-        128-bit withheld half ~ 2^-64. Astronomically small.
+  fp  = false-positive  P(surface | NOT ingested)  -- chance completion of the
+        64-bit withheld half of a 128-bit canary ~ 2^-64. Astronomically small.
   pi  = prior           P(ingested)                -- your belief before probing.
 
 Bayes factors (how much one observation multiplies your odds):

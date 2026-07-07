@@ -189,7 +189,7 @@ footer{padding:26px 0 60px;text-align:center;font-family:var(--mono);font-size:1
   <div class="two">
     <div class="card">
       <h3>Why a positive is loud</h3>
-      <p>A 128-bit withheld half has a chance-match rate <code>fp ≈ 2⁻⁶⁴</code>. So even a small emission rate makes <code>BF+ = e/fp</code> astronomically large — a single surface is worth <b>~60 bits</b> and pins the posterior at ~1. There is almost nothing to explain away.</p>
+      <p>A 128-bit canary's <b>64-bit withheld half</b> has a chance-match rate <code>fp ≈ 2⁻⁶⁴</code>. So even a small emission rate makes <code>BF+ = e/fp</code> astronomically large — a single surface is worth <b>~60 bits</b> and pins the posterior at ~1. There is almost nothing to explain away.</p>
     </div>
     <div class="card sig">
       <h3>Why silence is nearly mute</h3>
@@ -286,7 +286,7 @@ function render(){
   var moved=Math.abs(pn-prior);
   document.getElementById("negV").innerHTML = moved<0.03
     ? 'silence told you <b>almost nothing</b> — you\'re still on your prior'
-    : (pn<prior ? 'silence now leans <b>toward not-ingested</b> — because you raised e' : 'silence carries <b>some</b> weight now');
+    : 'silence now leans <b>toward not-ingested</b> — because you raised e';
 
   // place markers on the 0..1 track
   document.getElementById("mkPos").style.left = (pp*100)+"%";
